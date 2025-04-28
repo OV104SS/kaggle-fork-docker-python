@@ -208,7 +208,7 @@ ENV PYTHONUSERBASE="/root/.local"
 ADD patches/kaggle_gcp.py \
     patches/kaggle_secrets.py \
     patches/kaggle_session.py \
-    patches/kaggle_web_client.py \ 
+    patches/kaggle_web_client.py \
     patches/kaggle_datasets.py \
     patches/log.py \
     $PACKAGE_PATH/
@@ -233,4 +233,9 @@ RUN echo "$GIT_COMMIT" > /etc/git_commit && echo "$BUILD_DATE" > /etc/build_date
 # Add the CUDA home.
 ENV CUDA_HOME=/usr/local/cuda
 {{ end }}
+
+RUN uv pip install --system jupyterlab ipykernel kaggle
+
+RUN mkdir -p /root/.kaggle && chmod 700 /root/.kaggle
+
 ENTRYPOINT ["/usr/bin/env"]
